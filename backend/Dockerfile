@@ -20,5 +20,8 @@ USER appuser
 
 EXPOSE 8000
 
-# Use shell form so Railway's dynamic $PORT is resolved at runtime
-CMD uvicorn app.main:app --host 0.0.0.0 --port 8000
+# Copy and use entrypoint so Railway's $PORT env var is correctly expanded at runtime
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
