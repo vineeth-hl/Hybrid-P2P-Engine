@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+redis
+aioboto3
+pyjwt
+python-multipart
+prometheus-fastapi-instrumentator

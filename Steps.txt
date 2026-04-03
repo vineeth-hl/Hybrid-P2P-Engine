@@ -1,0 +1,34 @@
+============================================================
+PROJECT: HYBRID P2P-CLOUD ANONYMOUS TRANSFER
+============================================================
+
+PART 1: BACKEND (Python/FastAPI & Infrastructure)
+-----------------------------------------
+[x] 1.1 Initialize FastAPI project with Uvicorn.
+[x] 1.2 Setup Async Redis client for "Heartbeat" tracking (Key: UUID, TTL: 60s).
+[x] 1.3 Create `/join` endpoint and PyJWT authentication dependency.
+[x] 1.4 Setup AWS S3 Bucket with 1-day (AWS minimum) expiration lifecycle policy.
+[x] 1.5 Write `aioboto3` upload handler to stream files directly to S3.
+[x] 1.6 Build "Signaling" Microservice using Socket.io (Node.js).
+[x] 1.7 Deploy Coturn (STUN/TURN) for NAT traversal.
+
+PART 2: FRONTEND (React & WebRTC)
+-----------------------------------------
+[x] 2.1 Build Dual-Pane Dashboard (Online Users vs. Active Transfers).
+[x] 2.2 Implement WebRTC RTCPeerConnection for direct P2P.
+[x] 2.3 Implement RTCDataChannel with 16KB chunking logic.
+[x] 2.4 Build "Hybrid Logic": Check P2P status -> Fallback to S3 API.
+[x] 2.5 Add IndexedDB for "Instant Save" UI performance.
+[x] 2.6 Add Progress Bars using WebAPI 'progress' events.
+
+PART 3: DEPLOYMENT (Docker & K8s)
+-----------------------------------------
+[x] 3.1 Create multi-stage Dockerfiles for all services.
+[x] 3.2 Write K8s Deployment manifests (Frontend, API, Socket).
+[x] 3.3 Configure Nginx Ingress for SSL Termination and IP Hiding.
+[x] 3.4 Setup AWS Lambda for automatic "Download-then-Delete" cleanup.
+[x] 3.5 (Optional) Add Prometheus/Grafana to monitor transfer speeds.
+
+============================================================
+GOAL: Outperform P2P-only by ensuring 100% connectivity.
+============================================================

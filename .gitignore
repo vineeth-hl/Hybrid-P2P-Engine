@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Environment Files
+.env
+credentials.txt
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Build Artifacts
+frontend/dist/
+frontend/build/

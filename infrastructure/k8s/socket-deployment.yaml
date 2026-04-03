@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: socket-deployment
+  labels:
+    app: socket
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: socket
+  template:
+    metadata:
+      labels:
+        app: socket
+    spec:
+      containers:
+      - name: socket
+        image: hybrid-p2p/socket:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3001
+        
+        # Lightweight configuration tuned for concurrent IO
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "250m"
+            memory: "256Mi"
+
+---
+# Internal Cluster Routing
+apiVersion: v1
+kind: Service
+metadata:
+  name: socket-service
+spec:
+  type: ClusterIP
+  selector:
+    app: socket
+  ports:
+  - port: 3001
+    targetPort: 3001

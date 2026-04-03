@@ -1,0 +1,34 @@
+services:
+  # 1. P2P Matchmaker Server (Node.js)
+  - type: web
+    name: p2p-signaling-server
+    env: node
+    rootDir: signaling
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: NODE_VERSION
+        value: 18.17.0
+
+  # 2. Core API Backend (Python FastAPI)
+  - type: web
+    name: p2p-fastapi-backend
+    env: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    # Render requires binding to 0.0.0.0
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port 10000
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      # You will fill these out securely in the Render Dashboard GUI later
+      - key: REDIS_URL
+        sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_REGION
+        value: ap-south-1
+      - key: S3_BUCKET_NAME
+        sync: false

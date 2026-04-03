@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  coturn:
+    image: coturn/coturn:latest
+    container_name: webrtc-coturn
+    # Host network mode is strongly recommended for TURN servers.
+    # It bypasses Docker's internal NAT, which severely struggles
+    # with the wide range of UDP port allocations WebRTC relay requires.
+    network_mode: "host"
+    restart: unless-stopped
+    command:
+      - -n                                      # Run without reading a turnserver.conf file
+      - --log-file=stdout                       # Output logs to standard out for easy Docker trailing
+      - --listening-port=3478                   # Set the primary listening port for standard STUN/TURN
+      - --tls-listening-port=5349               # Set the listening port for secure TURN (TURNS)
+      - --min-port=49152                        # Start of the dynamic UDP port range for media relay
+      - --max-port=65535                        # End of the dynamic UDP port range for media relay
+      - --fingerprint                           # Requires message fingerprints in STUN packets (crucial for WebRTC)
+      - --lt-cred-mech                          # Enable Long-Term Credential Mechanism (required for WebRTC TURN auth)
+      - --realm=hybrid-p2p.local                # Realm name used for authentication
+      - --user=webrtc_user:SuperSecretPass123   # The absolute username:password for clients to connect
+      
+      # NOTE: In production, do not hardcode your public IP.
+      # You must replace 123.45.67.89 with your server's actual public IPv4 address.
+      - --external-ip=123.45.67.89              # Public IP announced to clients during NAT handshake
+      - --relay-ip=123.45.67.89                 # Public IP used to relay the UDP traffic

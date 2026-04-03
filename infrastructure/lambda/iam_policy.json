@@ -1,0 +1,24 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowLeastPrivilegeBurnAfterReading",
+            "Effect": "Allow",
+            "Action": [
+                "s3:DeleteObject",
+                "s3:GetObject"
+            ],
+            "Resource": "arn:aws:s3:::<INSERT_YOUR_EXACT_BUCKET_NAME>/*"
+        },
+        {
+            "Sid": "AllowCloudWatchLoggingConstraints",
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "arn:aws:logs:*:*:*"
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: api-servicemonitor
+  labels:
+    # This label allows the Prometheus Operator to discover and ingest this monitor
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: api
+  endpoints:
+  # Scrape the named "http" port specifically
+  - port: http
+    path: /metrics
+    interval: 15s
+    # Drop metrics quickly if connection stalls
+    scrapeTimeout: 10s
