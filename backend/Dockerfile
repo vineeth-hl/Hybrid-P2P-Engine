@@ -12,6 +12,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy source repository
 COPY . .
 
+# Copy entrypoint and set permissions BEFORE switching to non-root user
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 # Assign explicit ownership to the secure non-root user
 RUN chown -R appuser:appgroup /app
 
@@ -19,9 +23,5 @@ RUN chown -R appuser:appgroup /app
 USER appuser
 
 EXPOSE 8000
-
-# Copy and use entrypoint so Railway's $PORT env var is correctly expanded at runtime
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
